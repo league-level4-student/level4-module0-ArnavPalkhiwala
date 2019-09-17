@@ -138,6 +138,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				livingNeighbors[i][j] = getLivingNeighbors(i, j);
 
 			}
+
 		}
 
 		// 8. check if each cell should live or die
@@ -165,7 +166,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		if (x > 0) {
 
 			if (twoDArray[x - 1][y].isAlive)
-
 				livingNeighbors++;
 
 		}
@@ -186,7 +186,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		}
 
-		if (x > 0 && y > 0) {
+		if (x <= 0 && y > 0) {
 
 			if (twoDArray[x + 1][y - 1].isAlive)
 
@@ -194,15 +194,15 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		}
 
-		if (x > 0) {
+		if (x <= 0) {
 
-			if (twoDArray[x + 1][y - 1].isAlive)
+			if (twoDArray[x + 1][y].isAlive)
 
 				livingNeighbors++;
 
 		}
 
-		if (x > 0 && y > 0) {
+		if (x > 0 && y <= 0) {
 
 			if (twoDArray[x - 1][y + 1].isAlive)
 
@@ -210,7 +210,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		}
 
-		if (x > 0) {
+		if (y <= 0) {
 
 			if (twoDArray[x][y + 1].isAlive)
 
@@ -218,13 +218,15 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		}
 
-		if (x > 0 && y > 0) {
+		if (x <= 0 && y <= 0) {
 
 			if (twoDArray[x + 1][y + 1].isAlive)
 
 				livingNeighbors++;
 
 		}
+		
+		System.out.println(livingNeighbors);
 
 		return livingNeighbors;
 	}
@@ -251,6 +253,19 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 10. Use e.getX() and e.getY() to determine
 		// which cell is clicked. Then toggle
 		// the isAlive variable for that cell.
+
+		int mouseX = e.getX() / cellsPerRow;
+		int mouseY = e.getY() / cellsPerRow;
+		if (twoDArray[mouseX][mouseY].isAlive) {
+
+			twoDArray[mouseX][mouseY].isAlive = false;
+		}
+
+		else {
+
+			twoDArray[mouseX][mouseY].isAlive = true;
+
+		}
 
 		repaint();
 	}
