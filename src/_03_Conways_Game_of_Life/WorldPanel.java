@@ -136,20 +136,17 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 			for (int j = 0; j < twoDArray[i].length; j++) {
 
 				livingNeighbors[i][j] = getLivingNeighbors(i, j);
-
 			}
 
 		}
-
-		// 8. check if each cell should live or die
-
 		for (int i = 0; i < twoDArray.length; i++) {
 			for (int j = 0; j < twoDArray[i].length; j++) {
-
-				twoDArray[i][j].liveOrDie(livingNeighbors.length);
-
+				twoDArray[i][j].liveOrDie(livingNeighbors[i][j]);
+				
 			}
+				
 		}
+		// 8. check if each cell should live or die
 
 		repaint();
 
@@ -163,69 +160,65 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		int livingNeighbors = 0;
 
-		if (x > 0) {
+			if (x > 0) {
+				if (twoDArray[x - 1][y].isAlive) {
+					livingNeighbors++;
+				}
 
-			if (twoDArray[x - 1][y].isAlive)
-				livingNeighbors++;
+			}
 
-		}
+			if (x > 0 && y > 0) {
+				if (twoDArray[x - 1][y - 1].isAlive) {
+					livingNeighbors++;
+				}
 
-		if (x > 0 && y > 0) {
+			}
 
-			if (twoDArray[x - 1][y - 1].isAlive)
+			if (x > 0 && y < cellsPerRow-1) {
+				if (twoDArray[x - 1][y + 1].isAlive) {
+					livingNeighbors++;
+				}
 
-				livingNeighbors++;
+			}
 
-		}
+		
 
 		if (y > 0) {
 
-			if (twoDArray[x][y - 1].isAlive)
-
+			if (twoDArray[x][y - 1].isAlive) {
 				livingNeighbors++;
+			}
 
 		}
 
-		if (x <= 0 && y > 0) {
-
-			if (twoDArray[x + 1][y - 1].isAlive)
-
+		if (x < cellsPerRow-1 && y > 0) {
+			if (twoDArray[x + 1][y - 1].isAlive) {
 				livingNeighbors++;
-
+			}
 		}
 
-		if (x <= 0) {
+		if (x < cellsPerRow-1) {
 
-			if (twoDArray[x + 1][y].isAlive)
-
+			if (twoDArray[x + 1][y].isAlive) {
 				livingNeighbors++;
-
+			}
 		}
 
-		if (x > 0 && y <= 0) {
-
-			if (twoDArray[x - 1][y + 1].isAlive)
-
+		if (y < cellsPerRow-1) {
+			if (twoDArray[x][y + 1].isAlive) {
 				livingNeighbors++;
-
+			}
 		}
 
-		if (y <= 0) {
+		if (x < cellsPerRow-1 && y < cellsPerRow-1) {
 
-			if (twoDArray[x][y + 1].isAlive)
-
+			if (twoDArray[x + 1][y + 1].isAlive) {
 				livingNeighbors++;
-
-		}
-
-		if (x <= 0 && y <= 0) {
-
-			if (twoDArray[x + 1][y + 1].isAlive)
-
-				livingNeighbors++;
-
+			}
 		}
 		
+		
+
 		System.out.println(livingNeighbors);
 
 		return livingNeighbors;
