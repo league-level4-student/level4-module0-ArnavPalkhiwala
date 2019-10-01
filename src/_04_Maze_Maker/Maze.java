@@ -40,7 +40,7 @@ public class Maze {
 
 			for (int j = 0; j < mainArray[i].length; j++) {
 				
-				
+				 mainArray[i][j].draw(g);
 
 			}
 		}
@@ -50,7 +50,8 @@ public class Maze {
 
 	// 4b. This method returns the selected cell.
 	public Cell getCell(int x, int y) {
-		return null;
+
+		return  mainArray[x][y];
 	}
 
 	public int getWidth() {
