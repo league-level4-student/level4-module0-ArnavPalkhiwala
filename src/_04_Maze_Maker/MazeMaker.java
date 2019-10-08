@@ -21,8 +21,8 @@ public class MazeMaker {
 
 		// 4. select a random cell to start
 
-		int r = new Random().nextInt((width * height) - 1);
-		int rTwo = new Random().nextInt((width * height) - 1);
+		int r = new Random().nextInt((width) - 1);
+		int rTwo = new Random().nextInt((height) - 1);
 		Cell selected = maze.getCell(r, rTwo);
 
 		// 5. call selectNextPath method with the randomly selected cell
@@ -50,38 +50,101 @@ public class MazeMaker {
 
 			// C1. select one at random.
 
-			int r = new Random().nextInt((width * height) - 1);
-			int rTwo = new Random().nextInt((width * height) - 1);
-			currentCell = maze.getCell(r, rTwo);
-			
+			int r = new Random().nextInt(unvisited.size());
+
 			// C2. push it to the stack
-			
-			uncheckedCells.push(currentCell);
+
+			Cell randNeighbor = unvisited.get(r);
+			uncheckedCells.push(unvisited.get(r));
 
 			// C3. remove the wall between the two cells
 
+			if (currentCell.getX() - 1 == randNeighbor.getX()) {
+
+				currentCell.setWestWall(false);
+				randNeighbor.setEastWall(false);
+			}
+
+			if (currentCell.getX() + 1 == randNeighbor.getX()) {
+
+				currentCell.setEastWall(false);
+				randNeighbor.setWestWall(false);
+			}
+
+			if (currentCell.getY() - 1 == randNeighbor.getY()) {
+
+				currentCell.setNorthWall(false);
+				randNeighbor.setSouthWall(false);
+			}
+
+			if (currentCell.getY() + 1 == randNeighbor.getY()) {
+
+				currentCell.setSouthWall(false);
+				randNeighbor.setNorthWall(false);
+			}
+
 			// C4. make the new cell the current cell and mark it as visited
 
+			randNeighbor = currentCell;
+			randNeighbor.hasBeenVisited();
+
 			// C5. call the selectNextPath method with the current cell
+
+			selectNextPath(currentCell);
 
 		}
 
 		// D. if all neighbors are visited
 
-		// D1. if the stack is not empty
+		if (currentCell.hasNorthWall() && currentCell.hasSouthWall() && currentCell.hasEastWall() && currentCell.hasWestWall()) {
 
-		// D1a. pop a cell from the stack
+			// D1. if the stack is not empty
+			
+			if (uncheckedCells.size() > 0) {
 
-		// D1b. make that the current cell
+			// D1a. pop a cell from the stack
+				
+				Cell popped = uncheckedCells.pop();
 
-		// D1c. call the selectNextPath method with the current cell
+			// D1b. make that the current cell
+				
+				popped = currentCell;
 
+			// D1c. call the selectNextPath method with the current cell
+				
+				selectNextPath(currentCell);
+				
+			}
+		}
 	}
 
 	// 7. Complete the remove walls method.
 	// This method will check if c1 and c2 are adjacent.
 	// If they are, the walls between them are removed.
 	private static void removeWalls(Cell c1, Cell c2) {
+		if (c1.getX() - 1 == c2.getX()) {
+
+			c1.setWestWall(false);
+			c2.setEastWall(false);
+		}
+
+		if (c1.getX() + 1 == c2.getX()) {
+
+			c1.setEastWall(false);
+			c2.setWestWall(false);
+		}
+
+		if (c1.getY() - 1 == c2.getY()) {
+
+			c1.setNorthWall(false);
+			c2.setSouthWall(false);
+		}
+
+		if (c1.getY() + 1 == c2.getY()) {
+
+			c1.setSouthWall(false);
+			c2.setNorthWall(false);
+		}
 
 	}
 
