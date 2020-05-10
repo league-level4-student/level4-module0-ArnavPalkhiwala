@@ -1,16 +1,26 @@
 package _02_Pixel_Art;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class PixelArtMaker implements MouseListener{
+public class PixelArtMaker implements MouseListener, ActionListener, Serializable{
 	private JFrame window;
 	private GridInputPanel gip;
 	private GridPanel gp;
 	ColorSelectionPanel csp;
+	private JButton saveImage = new JButton("Save Image");
 	
 	public void start() {
 		gip = new GridInputPanel(this);	
@@ -30,6 +40,8 @@ public class PixelArtMaker implements MouseListener{
 		window.remove(gip);
 		window.add(gp);
 		window.add(csp);
+		window.add(saveImage);
+		saveImage.addActionListener(this);
 		gp.repaint();
 		gp.addMouseListener(this);
 		window.pack();
@@ -61,5 +73,22 @@ public class PixelArtMaker implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == saveImage) {
+			
+			try (FileOutputStream fos = new FileOutputStream(new File("src/_02_Pixel_Art/ImageSave")); 
+					ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+				oos.writeObject(gp);
+			} catch (IOException f) {
+				f.printStackTrace();
+			}
+
+
+		}
+		
 	}
 }

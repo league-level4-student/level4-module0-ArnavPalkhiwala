@@ -1,12 +1,14 @@
+
 package _02_Pixel_Art;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.Serializable;
 
 import javax.swing.JPanel;
 
-public class GridPanel extends JPanel{
+public class GridPanel extends JPanel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int windowWidth;
@@ -74,6 +76,8 @@ public class GridPanel extends JPanel{
 			for (int j = 0; j < twoDArray[i].length; j++) {
 				g.setColor(twoDArray[i][j].color);
 				g.fillRect(twoDArray[i][j].x, twoDArray[i][j].y, pixelWidth, pixelHeight);
+				g.setColor(Color.black);
+				g.drawRect(twoDArray[i][j].x, twoDArray[i][j].y, pixelWidth, pixelHeight);
 			}
 		}
 		

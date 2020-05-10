@@ -1,12 +1,21 @@
 package _02_Pixel_Art;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GridInputPanel extends JPanel{
+
+public class GridInputPanel extends JPanel implements Serializable, ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JTextField windowWidthField;
 	private JTextField windowHeightField;
@@ -27,7 +36,6 @@ public class GridInputPanel extends JPanel{
 		
 		add(new JLabel("screen width:"));
 		add(windowWidthField);
-		add(new JLabel("\tscreen height:"));
 		add(windowHeightField);
 		add(new JLabel("\ttotal rows:"));
 		add(rowsField);
@@ -35,7 +43,7 @@ public class GridInputPanel extends JPanel{
 		add(colsField);
 		add(submitButton);
 		
-		submitButton.addActionListener((e)->submit());
+		submitButton.addActionListener(this);
 	}
 	
 	private void submit() {
@@ -66,6 +74,23 @@ public class GridInputPanel extends JPanel{
 	
 	private void invalidateInput() {
 		JOptionPane.showMessageDialog(null, "Be sure all fields are complete with positive numbers.", "ERROR", 0);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+//		submit();
+		// TODO Auto-generated method stub
+		try (FileInputStream fis = new FileInputStream(new File("src/_02_Pixel_Art/ImageSave")); 
+				ObjectInputStream ois = new ObjectInputStream(fis)) {
+			ois.readObject();
+		} catch (IOException a) {
+			a.printStackTrace();
+		} catch (ClassNotFoundException b) {
+			// This can occur if the object we read from the file is not
+			// an instance of any recognized class
+			b.printStackTrace();
+		}
 	}
 	
 	
