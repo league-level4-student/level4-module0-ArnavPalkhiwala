@@ -15,7 +15,7 @@ import java.io.Serializable;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class PixelArtMaker implements MouseListener, ActionListener, Serializable{
+public class PixelArtMaker implements MouseListener, ActionListener{
 	private JFrame window;
 	private GridInputPanel gip;
 	private GridPanel gp;
